@@ -17,6 +17,7 @@ public class CarServiceImpl implements CarService {
     private final Map<String, Car> cars = new HashMap<>();
 
     @Override
+    @TrackTime
     public void addCar(Car car) {
         delay();
         cars.put(car.getModel(), car);
@@ -37,6 +38,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @TrackTime
     public List<Car> getCarsByType(TypeCar typeCar) {
         delay();
         return cars.values().stream().filter(Car -> Car.getTypeCar().equals(typeCar)).collect(Collectors.toList());
