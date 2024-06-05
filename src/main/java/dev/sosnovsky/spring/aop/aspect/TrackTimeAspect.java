@@ -1,6 +1,6 @@
-package dev.sosnovsky.SpringAOP.aspect;
+package dev.sosnovsky.spring.aop.aspect;
 
-import dev.sosnovsky.SpringAOP.service.TimeService;
+import dev.sosnovsky.spring.aop.service.TimeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,31 +13,26 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @AllArgsConstructor
-public class MeasuringAspect {
+public class TrackTimeAspect {
 
     private final TimeService timeService;
 
-    @Pointcut("@annotation(dev.sosnovsky.SpringAOP.annotation.TrackTime)")
+    // todo проверить, что будет если проверяемый метод выдаст ошибку
+    @Pointcut("@annotation(dev.sosnovsky.spring.aop.annotation.TrackTime)")
     public void anyMethodWithAnnotationTrackTime() {
     }
 
     @Around("anyMethodWithAnnotationTrackTime()")
     public Object aroundAnyMethodWithAnnotationTrackTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
-
         String methodName = proceedingJoinPoint.getSignature().getName();
-
-//        log.info("Начало выполнения метода {}", methodName);
-
         var result = proceedingJoinPoint.proceed();
-
         long endTime = System.currentTimeMillis();
-
-//        log.info("Метод {} выполнился за {} мс", methodName, endTime - startTime);
-
         long executionTime = endTime - startTime;
 
+        // try
         timeService.saveMethodExecutionTime(methodName, executionTime);
+        // catch
 
         return result;
     }

@@ -1,8 +1,9 @@
-package dev.sosnovsky.SpringAOP.service;
+package dev.sosnovsky.spring.aop.service;
 
-import dev.sosnovsky.SpringAOP.annotation.TrackTime;
-import dev.sosnovsky.SpringAOP.model.Car;
-import dev.sosnovsky.SpringAOP.model.TypeCar;
+import dev.sosnovsky.spring.aop.annotation.TrackAsyncTime;
+import dev.sosnovsky.spring.aop.annotation.TrackTime;
+import dev.sosnovsky.spring.aop.model.Car;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CarServiceImpl implements CarService {
 
     private final Map<String, Car> cars = new HashMap<>();
@@ -19,43 +21,37 @@ public class CarServiceImpl implements CarService {
     @Override
     @TrackTime
     public void addCar(Car car) {
-        delay();
-        cars.put(car.getModel(), car);
+        randomDelay();
+        cars.put(car.getVinNumber(), car);
     }
 
     @Override
-    @TrackTime
+    @TrackAsyncTime
     public void addCars(List<Car> newCar) {
-        delay();
-        cars.putAll(newCar.stream().collect(Collectors.toMap(Car::getModel, car -> car)));
+        randomDelay();
+        cars.putAll(newCar.stream().collect(Collectors.toMap(Car::getVinNumber, car -> car)));
     }
 
     @Override
     @TrackTime
-    public Car getCarByModel(String model) {
-        delay();
-        return cars.get(model);
+    public Car getCarByVinNumber(String vinNumber) {
+        randomDelay();
+        return cars.get(vinNumber);
     }
 
     @Override
-    @TrackTime
-    public List<Car> getCarsByType(TypeCar typeCar) {
-        delay();
-        return cars.values().stream().filter(Car -> Car.getTypeCar().equals(typeCar)).collect(Collectors.toList());
-    }
-
-    @Override
-    @TrackTime
+    @TrackAsyncTime
     public List<Car> getAllCars() {
-        delay();
+        randomDelay();
         return cars.values().stream().toList();
     }
 
-    private void delay() {
+    private void randomDelay() {
         long delayTime = new Random().nextLong(500, 1000);
         try {
             Thread.sleep(delayTime);
         } catch (InterruptedException e) {
+            log.error("The error was occurred", e);
         }
     }
 }

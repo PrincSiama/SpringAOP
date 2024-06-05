@@ -1,4 +1,4 @@
-package dev.sosnovsky.SpringAOP.dto;
+package dev.sosnovsky.spring.aop.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

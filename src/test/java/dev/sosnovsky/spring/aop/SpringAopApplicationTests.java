@@ -1,4 +1,4 @@
-package dev.sosnovsky.SpringAOP;
+package dev.sosnovsky.spring.aop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
