@@ -21,13 +21,13 @@ public class TimeServiceImpl implements TimeService {
         timeRepository.save(executionTime);
     }
 
-    @Override
     @Async
+    @Override
     public void asyncSaveMethodExecutionTime(String methodName, long executionTimeInMs) throws InterruptedException {
         Thread.sleep(500);
         ExecutionTime executionTime = new ExecutionTime(methodName, executionTimeInMs);
         timeRepository.save(executionTime);
-        log.info("Сохранено {}", executionTime);
+        log.info("Save {}", executionTime);
     }
 
     @Override

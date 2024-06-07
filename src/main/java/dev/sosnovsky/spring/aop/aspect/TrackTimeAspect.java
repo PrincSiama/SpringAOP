@@ -17,7 +17,6 @@ public class TrackTimeAspect {
 
     private final TimeService timeService;
 
-    // todo проверить, что будет если проверяемый метод выдаст ошибку
     @Pointcut("@annotation(dev.sosnovsky.spring.aop.annotation.TrackTime)")
     public void anyMethodWithAnnotationTrackTime() {
     }
@@ -30,9 +29,11 @@ public class TrackTimeAspect {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
 
-        // try
-        timeService.saveMethodExecutionTime(methodName, executionTime);
-        // catch
+        try {
+            timeService.saveMethodExecutionTime(methodName, executionTime);
+        } catch (Exception e) {
+            log.error("The error was occurred", e);
+        }
 
         return result;
     }

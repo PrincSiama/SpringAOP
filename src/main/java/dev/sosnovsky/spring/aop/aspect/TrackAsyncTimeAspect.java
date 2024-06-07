@@ -17,7 +17,6 @@ public class TrackAsyncTimeAspect {
 
     private final TimeService timeService;
 
-    // todo проверить, что будет если проверяемый метод выдаст ошибку
     @Pointcut("@annotation(dev.sosnovsky.spring.aop.annotation.TrackAsyncTime)")
     public void anyMethodWithAnnotationTrackAsyncTime() {
     }
@@ -30,11 +29,13 @@ public class TrackAsyncTimeAspect {
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
 
-        // try
+        try {
         timeService.asyncSaveMethodExecutionTime(methodName, executionTime);
-        // catch
+        } catch (Exception e) {
+            log.error("The error was occurred", e);
+        }
 
-        log.info("Замерено {}", executionTime );
+        log.info("Measured {}", executionTime );
 
         return result;
     }
