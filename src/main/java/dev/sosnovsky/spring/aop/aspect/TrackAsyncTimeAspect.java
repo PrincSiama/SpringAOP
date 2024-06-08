@@ -30,12 +30,10 @@ public class TrackAsyncTimeAspect {
         long executionTime = endTime - startTime;
 
         try {
-        timeService.asyncSaveMethodExecutionTime(methodName, executionTime);
+            timeService.asyncSaveMethodExecutionTime(methodName, executionTime);
         } catch (Exception e) {
-            log.error("The error was occurred", e);
+            log.error("The error was occurred while saving async method execution time", e);
         }
-
-        log.info("Measured {}", executionTime );
 
         return result;
     }

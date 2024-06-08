@@ -27,7 +27,6 @@ public class TimeServiceImpl implements TimeService {
         Thread.sleep(500);
         ExecutionTime executionTime = new ExecutionTime(methodName, executionTimeInMs);
         timeRepository.save(executionTime);
-        log.info("Save {}", executionTime);
     }
 
     @Override
@@ -53,6 +52,5 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public void clearStatistic() {
         timeRepository.clearTable();
-        log.info("The statistics were cleared");
     }
 }

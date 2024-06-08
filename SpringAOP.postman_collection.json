@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "fa711905-015b-4491-abe2-fd8e000b66e0",
+		"name": "SpringAOP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28174809"
+	},
+	"item": [
+		{
+			"name": "get avg time by method name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/time/avg/addCars",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"time",
+						"avg",
+						"addCars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get max time by method name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/time/max/addCars",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"time",
+						"max",
+						"addCars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get avg time by method name starts with",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/time/avg?methodNameStartsWith=add",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"time",
+						"avg"
+					],
+					"query": [
+						{
+							"key": "methodNameStartsWith",
+							"value": "add",
+							"description": "get, add"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clear statistic",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/time",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"time"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

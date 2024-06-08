@@ -32,7 +32,7 @@ public class TrackTimeAspect {
         try {
             timeService.saveMethodExecutionTime(methodName, executionTime);
         } catch (Exception e) {
-            log.error("The error was occurred", e);
+            log.error("The error was occurred while saving method execution time", e);
         }
 
         return result;
